@@ -5,6 +5,7 @@ version: 2
 jobs:
 
   image-tests-mpl302:
+    resource_class: large
     docker:
       - image: astropy/image-tests-py37-mpl302:1.10
     steps:
@@ -22,6 +23,7 @@ jobs:
           path: results
 
   image-tests-mpl310:
+    resource_class: large
     docker:
       - image: astropy/image-tests-py37-mpl311:1.10
     steps:
@@ -36,6 +38,7 @@ jobs:
           path: results
 
   image-tests-mpldev:
+    resource_class: large
     docker:
       - image: astropy/image-tests-py37-base:1.4
     steps:
