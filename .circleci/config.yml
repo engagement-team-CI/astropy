@@ -87,7 +87,19 @@ workflows:
   tests:
     jobs:
       - image-tests-mpl302
-      - image-tests-mpl302_large
 #      - image-tests-mpl310
       - image-tests-mpldev
+
+  hourly:
+    jobs:
+      - image-tests-mpl302
+      - image-tests-mpl302_large
+      - image-tests-mpldev
       - image-tests-mpldev_large
+    triggers:
+      - schedule:
+          cron: 0 * * * *
+          filters:
+            branches:
+              only:
+                - testing-resource-class-build-times
