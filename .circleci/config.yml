@@ -17,9 +17,12 @@ jobs:
           command: pip install scipy -U
       - run:
           name: Run tests
-          command: pytest -P visualization --remote-data=astropy --open-files --mpl --mpl-results-path=$PWD/results -W ignore:np.asscalar
+          command: pytest -P visualization --remote-data=astropy --open-files --mpl
+            --mpl-results-path=$PWD/results -W ignore:np.asscalar
       - store_artifacts:
           path: results
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
 
   image-tests-mpl310:
     docker:
@@ -31,7 +34,8 @@ jobs:
           command: pip install -e .[test] pytest-mpl
       - run:
           name: Run tests
-          command: pytest -P visualization --remote-data=astropy --open-files --mpl --mpl-results-path=$PWD/results -W ignore:np.asscalar
+          command: pytest -P visualization --remote-data=astropy --open-files --mpl
+            --mpl-results-path=$PWD/results -W ignore:np.asscalar
       - store_artifacts:
           path: results
 
@@ -45,7 +49,8 @@ jobs:
           command: pip3 install tox
       - run:
           name: Run tests
-          command: tox -e py37-test-image-mpldev -- -P visualization --remote-data=astropy --open-files --mpl-results-path=$PWD/results -W ignore:np.asscalar
+          command: tox -e py37-test-image-mpldev -- -P visualization --remote-data=astropy
+            --open-files --mpl-results-path=$PWD/results -W ignore:np.asscalar
       - store_artifacts:
           path: results
 
@@ -54,5 +59,5 @@ workflows:
   tests:
     jobs:
       - image-tests-mpl302
-#      - image-tests-mpl310
+      #      - image-tests-mpl310
       - image-tests-mpldev
